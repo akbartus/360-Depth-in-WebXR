@@ -46,6 +46,8 @@ The example 360 image and 360 depth both were taken from <a href="https://albert
 In order to generate own 360 depth for 360 image, please visit: [ https://albert100121.github.io/Depth-Anywhere/](https://huggingface.co/spaces/Albert-NHWang/Depth-Anywhere-App) 
 <br><b>Please note:</b> Make sure original image and generated depth both have the same size.
 
+### 360 Depth Video
+To be added soon.
 
 ### Tech Stack
 The project is powered by A-Frame, Three.js and Depth Anywhere project.
