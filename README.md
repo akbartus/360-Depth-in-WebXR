@@ -19,7 +19,7 @@ A-Frame component can be found in <b>"a-frame-component"</b> folder. Usage examp
 </head>
 <body>
     <a-scene>     
-        <a-entity rotation="90 0 0" depth-360="colorImageURL: 1.jpg; depthImageURL: 1depth.jpg; spread: 10; pointSize: 10; skip: 1; colored: true">
+        <a-entity rotation="90 0 0" depth-360="colorImageURL: https://cdn.glitch.global/35f43dae-1ed9-4eff-b068-3100ca885bb4/1.jpg; depthImageURL: https://cdn.glitch.global/35f43dae-1ed9-4eff-b068-3100ca885bb4/1depth.jpg; spread: 10; pointSize: 10; skip: 1; colored: true">
             <a-entity camera="fov: 75" wasd-controls look-controls position="0 0 1"></a-entity>
             <a-box color="orange" position="0 0 -5"></a-box>
         </a-entity>
@@ -48,4 +48,4 @@ In order to generate own 360 depth for 360 image, please visit: [ https://albert
 The project is powered by A-Frame, Three.js and Depth Anywhere project.
 
 ### Demo
-To see the component in action, visit the following page:
+To see the component in action, visit the following page: https://depth360-component.glitch.me/
