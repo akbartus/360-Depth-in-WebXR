@@ -39,9 +39,9 @@ A-Frame component can be found in <b>"a-frame-component"</b> folder. Usage examp
 Three.js example implementation can be found in <b>"threejs"</b> folder.
 
 ### Getting 360 Depth
-The example 360 image and 360 depth both were taken from <a href="https://albert100121.github.io/Depth-Anywhere/">"Depth Anywhere: Enhancing 360 Monocular Depth Estimation via Perspective Distillation and Unlabeled Data Augmentation - Neurips 2024" project</a>.
+The example 360 image and 360 depth both were taken from <a href="https://albert100121.github.io/Depth-Anywhere/">"Depth Anywhere: Enhancing 360 Monocular Depth Estimation via Perspective Distillation and Unlabeled Data Augmentation - Neurips 2024" project</a>.<br>
 In order to generate own 360 depth for 360 image, please visit: [ https://albert100121.github.io/Depth-Anywhere/](https://huggingface.co/spaces/Albert-NHWang/Depth-Anywhere-App) 
-<b>Please note:</b> Mkae sure original image and generated depth both have the same size.
+<br><b>Please note:</b> Mkae sure original image and generated depth both have the same size.
 
 
 ### Tech Stack
