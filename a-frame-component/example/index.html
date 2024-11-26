@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A-Frame Depth 360 Component</title>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+ <script src="depth-360-component.js"></script>
+</head>
+<body>
+    <a-scene>     
+        <a-entity rotation="90 0 0" depth-360="colorImageURL: 1.jpg; depthImageURL: 1depth.jpg; spread: 10; pointSize: 10; skip: 1; colored: true">
+            <a-entity camera="fov: 75" wasd-controls look-controls position="0 0 1"></a-entity>
+            <a-box color="orange" position="0 0 -5"></a-box>
+        </a-entity>
+        <a-sky color="#000"></a-sky>
+    </a-scene>
+</body>
+</html>

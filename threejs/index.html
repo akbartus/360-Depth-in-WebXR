@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Depth 360 Three.js Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+  <style>
+    body {
+      margin: 0;
+    }
+    canvas {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas></canvas>
+  <script>
+    function loadImage(url) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = (e) => { resolve(img); };
+        img.onerror = reject;
+        img.src = url;
+      });
+    }
+
+    function getImageData(img) {  
+      const ctx = document.createElement("canvas").getContext("2d");
+      ctx.canvas.width = img.width;
+      ctx.canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+      return ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+    }
+
+    // Return the pixel at UV coordinates (0 to 1) in 0 to 1 values
+    function getPixel(imageData, u, v) {
+      const x = u * (imageData.width - 1) | 0;
+      const y = v * (imageData.height - 1) | 0;
+      if (x < 0 || x >= imageData.width || y < 0 || y >= imageData.height) {
+        return [0, 0, 0, 0];
+      } else {
+        const offset = (y * imageData.width + x) * 4;
+        return Array.from(imageData.data.slice(offset, offset + 4)).map(v => v / 255);
+      }
+    }
+
+    async function main() {
+      const images = await Promise.all([
+        loadImage("2.jpg"),  // RGB
+        loadImage("2depth.jpg"),  // Depth
+      ]);
+      const data = images.map(getImageData);
+
+      const canvas = document.querySelector('canvas');
+      const renderer = new THREE.WebGLRenderer({canvas: canvas});
+
+      const fov = 75;
+      const aspect = 2; 
+      const near = 0.1;  
+      const far = 100;  
+      const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+
+      camera.position.set(0, 0, 1);  // Position the camera along the Z-axis
+      camera.up.set(0, 1, 0); // Set the "up" direction to the Z-axis (this is critical!)
+
+      const controls = new THREE.OrbitControls(camera, canvas);
+      controls.target.set(0, 0, 0);  // Ensure the camera is looking at the center of the scene (origin)
+      controls.update(); // Make sure the controls are set up correctly
+
+      const scene = new THREE.Scene();
+
+      const rgbData = data[0];
+      const depthData = data[1];
+
+      const skip = 1; 
+      const across = Math.ceil(rgbData.width / skip);
+      const down = Math.ceil(rgbData.height / skip);
+
+      const positions = [];
+      const colors = [];
+      const radius = 1;  
+      const spread = 10; // adjust here
+      const depthSpread = 10; // Scale factor for depth 
+      const imageAspect = rgbData.width / rgbData.height;
+
+      for (let y = 0; y < down; ++y) {
+        const v = y / (down - 1);
+        for (let x = 0; x < across; ++x) {
+          const u = x / (across - 1);
+          const rgb = getPixel(rgbData, u, v);
+          const depth = 1 - getPixel(depthData, u, v)[0];
+
+          // Convert from spherical to Cartesian coordinates
+          const phi = v * Math.PI; 
+          const theta = u * 2 * Math.PI;
+
+          // Compute spherical coordinates, adjust depth for the radial distance
+          const r = spread * depth; 
+          const xPos = r * Math.sin(phi) * Math.cos(theta);
+          const yPos = r * Math.sin(phi) * Math.sin(theta);
+          const zPos = r * Math.cos(phi);
+
+          positions.push(xPos, yPos, zPos);
+          colors.push(...rgb.slice(0, 3));  // RGB colors for the point cloud
+        }
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+      const vertexShader = `
+        attribute vec3 color;
+        varying vec3 vColor;
+
+        void main() {
+          vColor = color;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = 5.0;
+        }
+      `;
+
+      const fragmentShader = `
+        varying vec3 vColor;
+
+        void main() {
+          gl_FragColor = vec4(vColor, 1.0);
+        }
+      `;
+
+      const material = new THREE.ShaderMaterial({
+        vertexShader,
+        fragmentShader,
+      });
+
+      const points = new THREE.Points(geometry, material);
+      scene.add(points);
+      points.rotation.x = -Math.PI / 2;  
+      function resizeRendererToDisplaySize(renderer) {
+        const canvas = renderer.domElement;
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        const needResize = canvas.width !== width || canvas.height !== height;
+        if (needResize) {
+          renderer.setSize(width, height, false);
+        }
+        return needResize;
+      }
+
+      function render(time) {
+        time *= 0.001;
+
+        if (resizeRendererToDisplaySize(renderer)) {
+          const canvas = renderer.domElement;
+          camera.aspect = canvas.clientWidth / canvas.clientHeight;
+          camera.updateProjectionMatrix();
+        }
+
+        renderer.render(scene, camera);
+
+        requestAnimationFrame(render);
+      }
+
+      requestAnimationFrame(render);
+    }
+
+    main();
+  </script>
+</body>
+
+</html>
