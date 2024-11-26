@@ -15,7 +15,7 @@ A-Frame component can be found in <b>"a-frame-component"</b> folder. Usage examp
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A-Frame Depth 360 Component</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
- <script src="depth-360-component.js"></script>
+ <script src="https://cdn.jsdelivr.net/gh/akbartus/360-Depth-in-WebXR/a-frame-component/depth-360-component.js"></script>
 </head>
 <body>
     <a-scene>     
