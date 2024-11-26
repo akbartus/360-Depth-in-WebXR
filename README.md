@@ -1,4 +1,7 @@
 # 360 Depth in WebXR
+<p align="center">
+  <img src="img/screenshot.jpg" />
+</p>
 
 ### Description/Rationale
 The repository demonstrates the implementation of immersive 360 depth (image and video) in WebXR powered by **A-Frame**, **Three.js** and **Depth Anything**. It has the following: 
