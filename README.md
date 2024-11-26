@@ -1,8 +1,8 @@
 # 360 Depth in WebXR
 
 ### Description/Rationale
-The repository demonstrates the implementation of immersive 360 depth (image and video) for WebXR powered by **A-Frame** and **Three.js**. It has: 
-1. A-Frame component
+The repository demonstrates the implementation of immersive 360 depth (image and video) in WebXR powered by **A-Frame**, **Three.js** and **Depth Anything**. It has the following: 
+1. A-Frame component.
 2. Three.js example implementation.
 
 ### Instructions
