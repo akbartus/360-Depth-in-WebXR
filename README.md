@@ -9,7 +9,7 @@ The repository demonstrates the implementation of immersive 360 depth (image and
 2. Three.js example implementation.
 
 ### Instructions
-A-Frame component can be found in <b>"a-frame-component"</b> folder. Usage example of the componet is given below:
+A-Frame component can be found in <b>"a-frame-component"</b> folder. Usage example of the component is given below:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -31,13 +31,14 @@ A-Frame component can be found in <b>"a-frame-component"</b> folder. Usage examp
 </body>
 </html>
 ```
+In order to use it, make sure toinclude <b>depth-360</b> attribute.<br> 
 <b>A-Frame Component Schema:</b>
-* colorImageURL (string): URL of the RGB color image.
-* depthImageURL (string): URL of the corresponding depth map image.
+* colorImageURL (string): URL of the 360 RGB color image.
+* depthImageURL (string): URL of the corresponding 360 depth map image.
 * pointSize (integer): Size of the rendered points. (Default: 6)
 * spread (integer): Depth multiplier for rendering points. (Default: 100, Range: 10–300)
-* skip (integer): Number of pixels to skip when processing the images for optimization. (Default: 0, Range: 0–10)
-* colored (boolean): Determines whether to use the RGB image colors or render all points in white. (Default: true)
+* skip (integer): Number of points to skip when processing the images for optimization. (Default: 0, Range: 0–10)
+* colored (boolean): Determines whether to show point cloud as colored or white. (Default: true)
 
 Three.js example implementation can be found in <b>"threejs"</b> folder.
 
