@@ -31,8 +31,8 @@ A-Frame component can be found in <b>"a-frame-component"</b> folder. Usage examp
 </body>
 </html>
 ```
-In order to use it, make sure toinclude <b>depth-360</b> attribute.<br> 
-<b>A-Frame Component Schema:</b>
+In order to use the component, make sure to include <b>depth-360</b> attribute.<br><br> 
+<b>The component has the following schema:</b>
 * colorImageURL (string): URL of the 360 RGB color image.
 * depthImageURL (string): URL of the corresponding 360 depth map image.
 * pointSize (integer): Size of the rendered points. (Default: 6)
